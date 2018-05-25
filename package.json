@@ -7,10 +7,11 @@
     "version": "6.2.5",
     "templateVersion": "7.2.4"
   },
-  "dependencies":{
-    "react": "^16.2.0",
+  "dependencies": {
     "@elastic/eui": "^0.0.37",
+    "axios": "^0.18.0",
     "moment": "^2.20.1",
+    "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
   "scripts": {

@@ -1,5 +1,5 @@
 
-import exampleRoute from './server/routes/example';
+import country_info from './server/routes/country_info';
 import { resolve } from 'path';
 
 import React from 'react';
@@ -38,9 +38,8 @@ export default function (kibana) {
 
     init(server, options) {
       const config = server.config();
-
       // Add server routes and initialize the plugin here
-      exampleRoute(server);
+      country_info(server);
     }
 
 

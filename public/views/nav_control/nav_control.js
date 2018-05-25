@@ -11,6 +11,7 @@ import { chromeNavControlsRegistry } from 'ui/registry/chrome_nav_controls';
 import { uiModules } from 'ui/modules';
 import template from './nav_control.html';
 import { ConfirmModal } from '../../components';
+import chrome from 'ui/chrome';
 
 chromeNavControlsRegistry.register(constant({
   name: 'gdpr-plugin',
@@ -19,7 +20,7 @@ chromeNavControlsRegistry.register(constant({
 }));
 
 const module = uiModules.get('gdpr-plugin', ['kibana']);
-module.controller('privacyNavController', ($scope, globalNavState, kbnBaseUrl, Private, privacyUrl, cookieConfirmHeader, cookieConfirmBody, displayCountries) => {
+module.controller('privacyNavController', ($http, $scope, globalNavState, kbnBaseUrl, Private, privacyUrl, cookieConfirmHeader, cookieConfirmBody, displayCountries) => {
   $scope.openPrivacyPolicy = () => {
     window.open(privacyUrl, '_blank');
   }
@@ -36,24 +37,32 @@ module.controller('privacyNavController', ($scope, globalNavState, kbnBaseUrl, P
       unmountComponentAtNode(document.getElementById("confirmCookie"));
       document.cookie = "acceptCookiePolicy=true";
   }
-
+  const basePath = chrome.getBasePath();
+  console.log(basePath)
   if (document.cookie.split(';').filter((item) => {
       return item.includes('acceptCookiePolicy=true')
   }).length == 0) {
-
-    let req = $.ajax({ dataType: "json", url: 'http://ip-api.com/json?callback=?',
-        success: function( data ) {
-            console.log(data.country)
-            if (displayCountries.indexOf(data.country) > -1) {
-              render(<ConfirmModal closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>, document.getElementById("confirmCookie"));
-            }
-        },
-        error: function (jq,status,message) {
-          console.log("Unable to determine Location. Requiring Cookie confirmation");
-          render(<ConfirmModal closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>, document.getElementById("confirmCookie"));
-        },
-        timeout:5000
-    })
+  
+      let req = $.ajax({ dataType: "json", url: 'https://api.ipify.org?format=jsonp&callback=?',
+          success: function( data ) {
+            console.log(data.ip)
+            //internal route for country resolution
+            $http.get(basePath+'/api/gdpr-plugin/ip_info?ip='+data.ip).then(function mySuccess(data) {
+              console.log(data.data.country)
+              if (displayCountries.indexOf(data.data.country) > -1) {
+                render(<ConfirmModal closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>, document.getElementById("confirmCookie"));
+              }        
+            }, function myError(response) {
+                console.log("Unable to identify country from ip"+data.ip)
+                render(<ConfirmModal closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>, document.getElementById("confirmCookie"));
+            });
+          },
+          error: function (jq,status,message) {
+            console.log("Unable to determine Ip. Requiring Cookie confirmation");
+            render(<ConfirmModal closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>, document.getElementById("confirmCookie"));
+          },
+          timeout:5000
+      })
   }
 
 });
