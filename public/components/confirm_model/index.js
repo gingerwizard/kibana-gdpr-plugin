@@ -32,6 +32,9 @@ export function ConfirmModal(props) {
             </EuiModalBody>
 
             <EuiModalFooter>
+              <EuiButton href={props.privacyUrl} target={'_blank'}>
+                View Privacy Statement
+              </EuiButton>
               <EuiButton onClick={props.closeModal} fill>
                  Accept Policy
              </EuiButton>

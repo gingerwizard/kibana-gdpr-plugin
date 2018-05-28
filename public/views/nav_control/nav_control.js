@@ -36,13 +36,18 @@ module.controller('privacyNavController', ($http, $scope, globalNavState, kbnBas
   const closeWindow = () => {
       unmountComponentAtNode(document.getElementById("confirmCookie"));
       document.cookie = "acceptCookiePolicy=true";
+      //fire google tag manager event if it exists
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+       'event': 'cookiesAccepted'
+      });
   }
   const basePath = chrome.getBasePath();
-  console.log(basePath)
+  const modal = (<ConfirmModal privacyUrl={privacyUrl} closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>)
   if (document.cookie.split(';').filter((item) => {
       return item.includes('acceptCookiePolicy=true')
   }).length == 0) {
-  
+
       let req = $.ajax({ dataType: "json", url: 'https://api.ipify.org?format=jsonp&callback=?',
           success: function( data ) {
             console.log(data.ip)
@@ -50,16 +55,16 @@ module.controller('privacyNavController', ($http, $scope, globalNavState, kbnBas
             $http.get(basePath+'/api/gdpr-plugin/ip_info?ip='+data.ip).then(function mySuccess(data) {
               console.log(data.data.country)
               if (displayCountries.indexOf(data.data.country) > -1) {
-                render(<ConfirmModal closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>, document.getElementById("confirmCookie"));
-              }        
+                render (modal,document.getElementById("confirmCookie"));
+              }
             }, function myError(response) {
                 console.log("Unable to identify country from ip"+data.ip)
-                render(<ConfirmModal closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>, document.getElementById("confirmCookie"));
+                render (modal,document.getElementById("confirmCookie"));
             });
           },
           error: function (jq,status,message) {
             console.log("Unable to determine Ip. Requiring Cookie confirmation");
-            render(<ConfirmModal closeModal={closeWindow} modalHeader={cookieConfirmHeader} modalText={cookieConfirmBody}/>, document.getElementById("confirmCookie"));
+            render (modal,document.getElementById("confirmCookie"));
           },
           timeout:5000
       })
