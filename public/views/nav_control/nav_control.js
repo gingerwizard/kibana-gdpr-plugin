@@ -47,7 +47,6 @@ module.controller('privacyNavController', ($http, $scope, globalNavState, kbnBas
   if (document.cookie.split(';').filter((item) => {
       return item.includes('acceptCookiePolicy=true')
   }).length == 0) {
-
       let req = $.ajax({ dataType: "json", url: 'https://api.ipify.org?format=jsonp&callback=?',
           success: function( data ) {
             console.log(data.ip)
@@ -56,6 +55,12 @@ module.controller('privacyNavController', ($http, $scope, globalNavState, kbnBas
               console.log(data.data.country)
               if (displayCountries.indexOf(data.data.country) > -1) {
                 render (modal,document.getElementById("confirmCookie"));
+              } else {
+                document.cookie = "acceptCookiePolicy=true";
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                 'event': 'cookiesAccepted'
+                });
               }
             }, function myError(response) {
                 console.log("Unable to identify country from ip"+data.ip)
@@ -68,6 +73,11 @@ module.controller('privacyNavController', ($http, $scope, globalNavState, kbnBas
           },
           timeout:5000
       })
+  } else {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+     'event': 'cookiesAccepted'
+    });
   }
 
 });
