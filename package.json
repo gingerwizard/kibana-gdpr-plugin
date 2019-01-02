@@ -1,0 +1,41 @@
+{
+  "name": "kibana_gdpr_plugin",
+  "version": "6.5.4",
+  "description": "GDPR Plugin",
+  "main": "index.js",
+  "kibana": {
+    "version": "6.5.5",
+    "templateVersion": "1.0.0"
+  },
+  "dependencies": {
+    "@elastic/eui": "4.5.1-logos-tooltip-betabadge",
+    "axios": "^0.18.0",
+    "moment": "^2.20.1",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "scripts": {
+    "preinstall": "node ../../kibana/preinstall_check",
+    "kbn": "node ../../kibana/scripts/kbn",
+    "lint": "eslint .",
+    "start": "plugin-helpers start",
+    "test:server": "plugin-helpers test:server",
+    "test:browser": "plugin-helpers test:browser",
+    "build": "plugin-helpers build"
+  },
+  "devDependencies": {
+    "@elastic/eslint-config-kibana": "link:../../kibana/packages/eslint-config-kibana",
+    "@elastic/eslint-import-resolver-kibana": "link:../../kibana/packages/kbn-eslint-import-resolver-kibana",
+    "@kbn/plugin-helpers": "link:../../kibana/packages/kbn-plugin-helpers",
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.6.0",
+    "eslint-plugin-babel": "^5.2.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.22.1",
+    "eslint-plugin-mocha": "^5.2.0",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
+    "eslint-plugin-react": "^7.11.1",
+    "expect.js": "^0.3.1"
+  }
+}
