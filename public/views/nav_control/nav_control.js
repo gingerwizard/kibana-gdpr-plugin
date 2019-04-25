@@ -42,13 +42,13 @@ chromeHeaderNavControlsRegistry.register(($http,kbnBaseUrl, privacyUrl, cookieCo
     if (document.cookie.split(';').filter((item) => {
         return item.includes('acceptCookiePolicy=true')
     }).length == 0) {
-      fetch('http://api.ipapi.com/check?access_key=e225b5f510ded874d325535ad5afe809&format=1', {
+      fetch('https://api.ip.sb/geoip', {
           method: 'GET'
         }).then(res => res.json())
         .then( data => {
             console.log(data.ip)
-            console.log(data.country_name)
-            if (displayCountries.indexOf(data.country_name) > -1) {
+            console.log(data.country)
+            if (displayCountries.indexOf(data.country) > -1) {
               render( modal, el )
             } else {
               document.cookie = "acceptCookiePolicy=true";
