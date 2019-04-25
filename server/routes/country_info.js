@@ -8,24 +8,22 @@ export default function (server) {
     handler(req, reply) {
       const ip = get(req, 'query.ip');
       if (ip) {
-        axios.get('https://www.elastic.co/ip-data', {
-          params: {
-            myip:ip
+        return axios.get('https://api.ip.sb/geoip/'+ip).then(function (response) {
+          if (response.data.country){
+            return({ country: response.data.country });
+          } else {
+            return ({ country: "Unknown" });
           }
-        }).then(function (response) {
-            if (response.data.country){
-              reply({ country: response.data.country });
-            } else {
-              reply({ country: "Unknown" });
-            }
-          })
-          .catch(function (error) {
+          }).catch(function (error) {
             console.log("Unable to determine ip for "+ip)
             console.log(error)
+            return({ country: "Unknown" });
           })
-        } else {
-          reply({ country: "Unknown" });
-        }
+      }
+      else
+      {
+        return({ country: "Unknown" });
+      }
     }
   });
 
