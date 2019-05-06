@@ -19,8 +19,7 @@ export default function (kibana) {
           cookieConfirmBody: config.get('gdpr.cookieConfirmBody'),
           displayCountries: config.get('gdpr.displayCountries'),
         };
-      },
-      styleSheetPaths: require('path').resolve(__dirname, 'public/app.scss'),
+      }
     },
 
     config(Joi) {
