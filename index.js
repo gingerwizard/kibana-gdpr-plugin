@@ -18,12 +18,14 @@ export default function (kibana) {
           cookieConfirmHeader: config.get('gdpr.cookieConfirmHeader'),
           cookieConfirmBody: config.get('gdpr.cookieConfirmBody'),
           displayCountries: config.get('gdpr.displayCountries'),
+          gtm_id: config.get('gdpr.gtm_id'),
         };
       }
     },
 
     config(Joi) {
       return Joi.object({
+        gtm_id: Joi.string(),
         enabled: Joi.boolean().default(true),
         privacyUrl: Joi.string().default('https://www.elastic.co/legal/privacy-statement'),
         cookieConfirmHeader: Joi.string().default('Accept Cookie Policy'),

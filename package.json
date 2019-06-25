@@ -4,7 +4,7 @@
   "description": "GDPR Plugin",
   "main": "index.js",
   "kibana": {
-    "version": "7.0.0",
+    "version": "7.0.1",
     "templateVersion": "1.0.0"
   },
   "dependencies": {

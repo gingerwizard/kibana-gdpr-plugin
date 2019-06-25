@@ -12,14 +12,14 @@ import { uiModules } from 'ui/modules';
 import template from './nav_control.html';
 import { ConfirmModal } from '../../components';
 import chrome from 'ui/chrome';
-
+import TagManager from '../../components/gtm/TagManager'
 //7.0 changes
 import { chromeHeaderNavControlsRegistry } from 'ui/registry/chrome_header_nav_controls';
 import { PrivacyNavControl } from './nav_control_component';
 import { NavControlSide } from 'ui/chrome/directives/header_global_nav';
 
 
-chromeHeaderNavControlsRegistry.register(($http,kbnBaseUrl, privacyUrl, cookieConfirmHeader, cookieConfirmBody, displayCountries) => ({
+chromeHeaderNavControlsRegistry.register(($http,kbnBaseUrl, privacyUrl, cookieConfirmHeader, cookieConfirmBody, displayCountries, gtm_id) => ({
   name: 'kibana_gdpr_plugin',
   order: 1,
   side: NavControlSide.Right,
@@ -27,9 +27,13 @@ chromeHeaderNavControlsRegistry.register(($http,kbnBaseUrl, privacyUrl, cookieCo
     const props = {
       privacyUrl: privacyUrl
     };
+    const tagManagerArgs = {
+      gtmId: gtm_id
+    }
 
     const closeWindow = () => {
         document.cookie = "acceptCookiePolicy=true";
+        TagManager.initialize(tagManagerArgs)
         //fire google tag manager event if it exists
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
@@ -52,6 +56,7 @@ chromeHeaderNavControlsRegistry.register(($http,kbnBaseUrl, privacyUrl, cookieCo
               render( modal, el )
             } else {
               document.cookie = "acceptCookiePolicy=true";
+              TagManager.initialize(tagManagerArgs)
               window.dataLayer = window.dataLayer || [];
               window.dataLayer.push({
                'event': 'cookiesAccepted'
@@ -66,6 +71,7 @@ chromeHeaderNavControlsRegistry.register(($http,kbnBaseUrl, privacyUrl, cookieCo
           }
         );
     } else {
+      TagManager.initialize(tagManagerArgs)
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
        'event': 'cookiesAccepted'
