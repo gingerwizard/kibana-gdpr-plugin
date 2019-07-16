@@ -30,7 +30,7 @@ chromeHeaderNavControlsRegistry.register(($http,kbnBaseUrl, privacyUrl, cookieCo
     const tagManagerArgs = {
       gtmId: gtm_id
     }
-
+    
     const closeWindow = () => {
         document.cookie = "acceptCookiePolicy=true";
         TagManager.initialize(tagManagerArgs)

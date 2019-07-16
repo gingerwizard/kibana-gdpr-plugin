@@ -10,7 +10,7 @@ export default function (kibana) {
     publicDir: resolve(__dirname, 'public'),
     name: 'kibana_gdpr_plugin',
     uiExports: {
-      chromeNavControls: ['plugins/kibana_gdpr_plugin/views/nav_control/nav_control'],
+      navbarExtensions: ['plugins/kibana_gdpr_plugin/views/nav_control/nav_control'],
       injectDefaultVars: function (server) {
         const config = server.config();
         return {
