@@ -1,18 +1,18 @@
 {
   "name": "kibana_gdpr_plugin",
-  "version": "7.0.0",
+  "version": "7.2.0",
   "description": "GDPR Plugin",
   "main": "index.js",
   "kibana": {
-    "version": "7.0.0",
+    "version": "7.2.0",
     "templateVersion": "1.0.0"
   },
   "dependencies": {
-    "@elastic/eui": "6.10.7",
+    "@elastic/eui": "10.4.2",
     "axios": "^0.18.0",
     "moment": "^2.20.1",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "@kbn/i18n": "link:../../kibana/packages/kbn-i18n"
   },
   "scripts": {
