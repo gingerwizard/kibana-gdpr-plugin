@@ -52,7 +52,7 @@ gdpr.displayCountries: ['Austria','Belgium','Bulgaria','Croatia','Cyprus','Czech
       'Estonia','Finland','France','Germany','Greece','Hungary','Ireland','Italy','Latvia','Lithuania',
       'Luxembourg','Malta','Netherlands','Poland','Portugal','Romania','Slovakia','Slovenia','Spain','Sweden','United Kingdom']
 ```
-2. Start Kibana
+2. **Start Kibana from inside the GDPR plugin directory"
   - `yarn start`
 
 **Check the following:**
