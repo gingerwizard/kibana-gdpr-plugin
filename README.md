@@ -1,5 +1,7 @@
 # GDPR Plugin
 
+## Update
+
 1. **[Fork the kibana repo](https://github.com/elastic/kibana) (*or if it's already been forked, run the commands below*)**
   - `git checkout master`
   - `git remote add upstream git@github.com:elastic/kibana.git`
@@ -31,10 +33,16 @@
 8. **Push the changes that have been made (so far) to github**
   - `git add .`
   - `git commit -m "Update GDPR plugin to version <number>"`
-9. Before starting Kibana, we will need an instance of ElasticSearch running locally
-  - `docker pull docker.elastic.co/elasticsearch/elasticsearch:<version>`
-  - `docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:<version>`
-9. Add the following to the `kibana.yaml` config file:
+
+## Test Changes
+
+1. **Before starting Kibana, we will need an instance of ElasticSearch running**
+  - *Locally:*
+    - `docker pull docker.elastic.co/elasticsearch/elasticsearch:<version>`
+    - `docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:<version>`
+  - *Cloud:*
+    - Update the `kibana.yaml` config file to point at a cloud cluster
+2. **Add the following to the `kibana.yaml` config file:**
 ```
 elasticsearch.requestHeadersWhitelist: ['authorization','kibana.log.meta.req.headers.x-real-ip']
 gdpr.gtm_id: GTM-P9QHT22
@@ -42,22 +50,23 @@ gdpr.cookieConfirmHeader: 'Cookie Notice'
 gdpr.cookieConfirmBody: "This website and/or its third-party tools use cookies, which are necessary to its functioning, and required to achieve the purposes described in our privacy statement. If you want to know more, or withdraw your consent to all or some of the cookies, please refer to the cookie section of our privacy statement. By clicking accept, or closing this banner, you agree to the use of cookies."
 gdpr.displayCountries: ['Austria','Belgium','Bulgaria','Croatia','Cyprus','Czech Republic','Denmark',
       'Estonia','Finland','France','Germany','Greece','Hungary','Ireland','Italy','Latvia','Lithuania',
+      'Luxembourg','Malta','Netherlands','Poland','Portugal','Romania','Slovakia','Slovenia','Spain','Sweden','United Kingdom']
 ```
-9. Start Kibana
+2. Start Kibana
   - `yarn start`
 
-Check the following:
+**Check the following:**
 
 1. Modal is displayed in Europe and not U.S.
 2. Link to privacy policy works
 3. Cookie is created when modal is accepted
 4. Lock icon is created in upper right hand corner which links off to privacy policy
 
+## Deploy
 
-10. Build the plugin
+1. **Build the plugin**
   - `yarn build`
 
-11. Upload the plugin to GCP
-  - `https://github.com/<repo-name>/kibana-gdpr-plugin/releases`
-  - Draft a new release
-  - Tag with proper version number
+2. **Upload the plugin to GCP**
+  - [https://console.cloud.google.com/storage/browser/demo-elastic-co/plugins/](https://console.cloud.google.com/storage/browser/demo-elastic-co/plugins/)
+  - Set the plugin permissions to be public
