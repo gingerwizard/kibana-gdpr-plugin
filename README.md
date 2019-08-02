@@ -66,7 +66,8 @@ gdpr.displayCountries: ['Austria','Belgium','Bulgaria','Croatia','Cyprus','Czech
 
 1. **Build the plugin**
   - `yarn build`
+  - The build is zipped into `./build`
 
-2. **Upload the plugin to GCP**
+2. **Upload the zipped plugin to GCP**
   - [https://console.cloud.google.com/storage/browser/demo-elastic-co/plugins/](https://console.cloud.google.com/storage/browser/demo-elastic-co/plugins/)
   - Set the plugin permissions to be public
