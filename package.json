@@ -1,10 +1,10 @@
 {
   "name": "kibana_gdpr_plugin",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "description": "GDPR Plugin",
   "main": "index.js",
   "kibana": {
-    "version": "7.2.0",
+    "version": "7.2.1",
     "templateVersion": "1.0.0"
   },
   "dependencies": {
