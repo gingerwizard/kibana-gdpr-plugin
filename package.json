@@ -10,7 +10,7 @@
   "dependencies": {
     "@elastic/eui": "10.4.2",
     "axios": "^0.18.0",
-    "moment": "^2.20.1",
+    "moment": "^2.29.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "@kbn/i18n": "link:../../kibana/packages/kbn-i18n"
